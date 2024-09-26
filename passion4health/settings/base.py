@@ -232,3 +232,4 @@ CSRF_TRUSTED_ORIGINS = [
 #         },
 #     },
 # }
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50 MB
