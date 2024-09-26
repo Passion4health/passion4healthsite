@@ -243,12 +243,13 @@ class DonatePage(Page):
         max_length=255,
         null=True
     )
-    patternship_image = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.PROTECT, related_name="+", verbose_name="Image of patternship", null=True, blank=True
-    )
-    donate_link = models.URLField(
-        blank=False,
+    
+    # Instead of external link, now we use a field for embedding HTML donation forms
+    donation_embed_code = models.TextField(
+        blank=True,
         null=True,
+        verbose_name="Donation Embed Code",
+        help_text="Paste your donation form HTML from donorbox.org or similar service here."
     )
     
     # Reference to the ContactUs page
@@ -266,11 +267,10 @@ class DonatePage(Page):
             [
                 FieldPanel("donate_page_title"),
                 FieldPanel("donate_message"),
-                FieldPanel("patternship_image"),
-                FieldPanel("donate_link"),
-                FieldPanel("contact_us_page"),  # Add this panel to your content editor
+                FieldPanel("donation_embed_code"),  # New panel for HTML embed
+                FieldPanel("contact_us_page"),
             ],
-            heading="This page is a transmission to the actual fund collecting page. So use titles and messages that acknowledge the donor!"
+            heading="It is better if this page is edited by a developer!"
         ),
     ]
 class VolunteerJoinPage(Page):
