@@ -201,6 +201,16 @@ EMAIL_HOST_USER = 'info@passion4health.org'  # Your Zoho email address
 EMAIL_HOST_PASSWORD = 'xhDXmhFGF4qp'  # Make sure this is correct (or use an app-specific password if 2FA is enabled)
 DEFAULT_FROM_EMAIL = 'info@passion4health.org'
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://passion4health.org', 
+    'https://www.passion4health.org',
+    'http://passion4health.org', 
+    'http://www.passion4health.org',
+    'localhost',
+    '127.0.0.1',
+    ]
+
+
 # LOGGING = {
 #     'version': 1,
 #     'disable_existing_loggers': False,
