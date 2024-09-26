@@ -206,8 +206,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://www.passion4health.org',
     'http://passion4health.org', 
     'http://www.passion4health.org',
-    'localhost',
-    '127.0.0.1',
+    'http://localhost',
+    'http://127.0.0.1',
     ]
 
 
