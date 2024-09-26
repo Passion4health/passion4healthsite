@@ -1,9 +1,8 @@
 {% load wagtailimages_tags %}
 
-{% image self.bg_img  min-500x200 as tmp_photo %}
+{% image self.bg_img  original as tmp_photo %}
 <!-- slider Area Start-->
 <div class="slider-area" style="background-image: url({{ tmp_photo.url }}) !important;">
-    {% image self.bg_img original %}
     <div class="slider-active">
         <!-- Single Slider -->
         <div class="single-slider slider-height d-flex align-items-center">
