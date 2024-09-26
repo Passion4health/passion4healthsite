@@ -224,19 +224,7 @@ p {
 }
 
 /* line 35, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_common.scss */
-.bg-img-1 {
-  background-image: url(../img/slider/slider-img-1.jpg);
-}
 
-/* line 38, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_common.scss */
-.bg-img-2 {
-  background-image: url(../img/background-img/bg-img-2.jpg);
-}
-
-/* line 41, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_common.scss */
-.cta-bg-1 {
-  background-image: url(../img/background-img/bg-img-3.jpg);
-}
 
 /* line 46, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_common.scss */
 .img {
@@ -6946,20 +6934,7 @@ hr {
   background-color: #1f2b7b;
 }
 
-/* line 1, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_bradcam.scss */
-.breadcam_bg {
-  background-image: url(../img/banner/bradcam.png);
-}
 
-/* line 4, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_bradcam.scss */
-.breadcam_bg_1 {
-  background-image: url(../img/banner/bradcam2.png);
-}
-
-/* line 7, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_bradcam.scss */
-.breadcam_bg_2 {
-  background-image: url(../img/banner/bradcam3.png);
-}
 
 /* line 10, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_bradcam.scss */
 .bradcam_area {
@@ -8522,7 +8497,6 @@ del {
   margin-bottom: 10px;
 }
 
-/*# sourceMappingURL=style.css.map */
 .blog-img-cust {
   aspect-ratio: 1.7;
   overflow: hidden;

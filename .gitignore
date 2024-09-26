@@ -1,7 +1,6 @@
 # Ignore collected static files, but not app static files
 /staticfiles/  # Ignore the output of collectstatic
 /static/  # Ignore global static folder (collected)
-
 # Django project
 /media/
 *.sqlite3

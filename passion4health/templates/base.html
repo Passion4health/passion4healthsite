@@ -22,7 +22,7 @@
         {% endif %}
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="manifest" href="site.webmanifest">
+        {% comment %} <link rel="manifest" href="site.webmanifest"> {% endcomment %}
         {% with icon_logo=settings.base.SiteSettings.icon_logo %}
             {% image icon_logo original as icon%}
             <link rel="shortcut icon" type="image/x-icon" href="{{icon.url}}">
