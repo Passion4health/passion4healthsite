@@ -96,7 +96,7 @@ WSGI_APPLICATION = "passion4health.wsgi.application"
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'postgres://root:1234567890@localhost:5432/passion4health')
+        default=os.getenv('DATABASE_URL')
     )
 }
 
