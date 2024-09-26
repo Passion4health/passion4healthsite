@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import dj_database_url
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -94,14 +95,9 @@ WSGI_APPLICATION = "passion4health.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'passion4health',     # Replace with your database name
-        'USER': 'root',       # Replace with your database user
-        'PASSWORD': '1234567890',      # Replace with your user's password
-        'HOST': 'localhost',         # Set to 'localhost' or your PostgreSQL server's IP address
-        'PORT': '5432',              # Default PostgreSQL port is 5432
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL', 'postgres://root:1234567890@localhost:5432/passion4health')
+    )
 }
 
 

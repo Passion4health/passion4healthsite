@@ -4,6 +4,7 @@ beautifulsoup4==4.12.3
 certifi==2024.8.30
 charset-normalizer==3.3.2
 defusedxml==0.7.1
+dj-database-url==2.2.0
 Django==4.2.16
 django-filter==24.3
 django-modelcluster==6.3
@@ -28,6 +29,7 @@ six==1.16.0
 soupsieve==2.6
 sqlparse==0.5.1
 telepath==0.3.1
+typing_extensions==4.12.2
 tzdata==2024.1
 urllib3==2.2.2
 wagtail==6.2.1
