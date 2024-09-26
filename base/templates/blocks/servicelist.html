@@ -38,10 +38,10 @@
                                         {% if tmp_photo.url|slice:"-3:" == "svg"  %}
                                             {{tmp_photo|inline_svg  }}
                                         {% else %}
-                                            <img src="{{tmp_photo.url }}" alt="">
+                                            <img src="{{tmp_photo.url }}" alt="" >
                                         {% endif %}
                                         
-
+                                        <p>{{tmp_photo}}<br>{{tmp_photo.url}}</p>
                                     </span>
                                 </div>
                                 <div class="cat-cap">
