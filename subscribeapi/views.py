@@ -22,14 +22,14 @@ def subscribe(request):
         Subscriber.objects.create(email=email)
         
         # Prepare email content
-        subject = 'Thank you for email subscription'
+        subject = 'Thank you for email subscription!'
         from_email = 'info@passion4health.org'
         recipient_list = [email]
 
         # Render the email template with dynamic content
         email_html_content = render_to_string('emails/base_email.html', {
             'email_content': mark_safe('Thank you for subscribing to our newsletter!'),  # Mark as safe
-            'email_action_button': mark_safe('<a href="https://passion4health.org/learn-more" class="button">Learn More</a>'),  # Mark as safe
+            'email_action_button': mark_safe(''),  # Mark as safe
         })
 
         # Send the email

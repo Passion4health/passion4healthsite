@@ -47,10 +47,10 @@
 
 <body>
     <div
-        style="margin: auto; max-width: 600px; background-color: #fff; width: 90%; margin-top: 70px; margin-bottom: 70px; overflow: hidden;">
+        style="margin: auto; max-width: 600px; background-color: #fff; width: 100%; margin-top: 70px; margin-bottom: 70px; overflow: hidden;">
         <div style="width: 100%; overflow: hidden; aspect-ratio: 4;">
             {% if wagtail_settings.base.SiteSettings.email_bunner_image %}
-                {% image wagtail_settings.base.SiteSettings.email_bunner_image original as bunner %}
+                {% image wagtail_settings.base.SiteSettings.email_bunner_image fill-800x200 as bunner %}
                 <img src="https://passion4health.org{{bunner.url}}" alt="Passion4Health Banner" style="width: 100%; height: auto;">
             {% endif %}
             
