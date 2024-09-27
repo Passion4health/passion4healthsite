@@ -147,8 +147,11 @@
                         {% if authors %}
                             <div class="media align-items-center">
                                 {% for author in authors %}
-                                    {% image author.author_image original as author_image%}
-                                    <img src="{{author_image.url}}" alt="">
+                                    {% if author.author_image %}
+                                        {% image author.author_image fill-90x90 as author_image%}
+                                        <img src="{{author_image.url}}" alt="">
+                                    {% endif %}
+                                    
                                     <div class="media-body">
                                         <a href="#">
                                             <h4>{{author.name}}</h4>
