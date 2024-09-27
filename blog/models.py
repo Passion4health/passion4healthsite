@@ -25,12 +25,12 @@ class BlogIndex(Page):
         context = super().get_context(request)
 
         # Get all blog articles
-        blogarticles = BlogAndNewsArticle.objects.all()
+        blogarticles = BlogAndNewsArticle.objects.live()
 
         # Check for a tag filter in the GET request
         tag_filter = request.GET.get('tag', None)
         if tag_filter:
-            blogarticles = BlogAndNewsArticle.objects.filter(tags__name=tag_filter)
+            blogarticles = blogarticles.filter(tags__name=tag_filter)
             
         
             

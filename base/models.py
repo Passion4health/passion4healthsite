@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 # Create your models here.
 
 from wagtail.admin.panels import(
@@ -221,23 +223,58 @@ class ContactFormSubmission(models.Model):
         return f"Message from {self.name}"
     
     def save(self, *args, **kwargs):
-        # If there is a response message, mark the submission as responded
+        # If the object is new (first-time save), send a submission notification email
+        if not self.pk:
+            self.send_submission_email()
+        
+        # If there's a response message and it's the first time being saved, send response email
         if self.response_message and not self.responded:
             self.responded = True
+            self.send_response()
+
         super().save(*args, **kwargs)
 
+    def send_submission_email(self):
+        """Send an email to the user confirming receipt of the message."""
+        email_subject = "Thank you for contacting us!"
+        from_email = 'info@passion4health.org'
+        recipient_list = [self.email]
+
+        # Render the email template
+        email_html_content = render_to_string('emails/base_email.html', {
+            'email_content': mark_safe(f"Dear {self.name}, thank you for reaching out! We have received your message: <br><hr>\"{self.message}\"."),
+        })
+
+        # Send the email
+        send_mail(
+            subject=email_subject,
+            message='',  # Fallback for plain text email
+            html_message=email_html_content,
+            from_email=from_email,
+            recipient_list=recipient_list,
+            fail_silently=False,
+        )
+
     def send_response(self):
-        """Send an email response to the client."""
-        if self.response_message:
-            send_mail(
-                subject=f"Re: {self.subject}",
-                message=self.response_message,
-                from_email='info@passion4health.org',  # Replace with your sender email
-                recipient_list=[self.email],
-                fail_silently=False,
-            )
-            self.responded = True
-            self.save()
+        """Send an email response to the client with the admin's response message."""
+        email_subject = f"Re: {self.subject}"
+        from_email = 'info@passion4health.org'
+        recipient_list = [self.email]
+
+        # Render the response email template
+        email_html_content = render_to_string('emails/base_email.html', {
+            'email_content': mark_safe(f"Dear {self.name}, here is our response to your message: <br><hr>\"{self.response_message}\"."),
+        })
+
+        # Send the response email
+        send_mail(
+            subject=email_subject,
+            message='',  # Fallback for plain text email
+            html_message=email_html_content,
+            from_email=from_email,
+            recipient_list=recipient_list,
+            fail_silently=False,
+        )
     
 class ContactUs(Page):
     hero_block = StreamField(
