@@ -1,5 +1,5 @@
 
-{% load wagtailcore_tags wagtailimages_tags wagtailsettings_tags %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags %}
 <!DOCTYPE html>
 <html lang="en">
 {% get_settings as wagtail_settings %}
@@ -95,22 +95,22 @@
             <div style="text-align: center; padding: 20px;">
                     {% if wagtail_settings.base.SiteSettings.Facebook %}
                         <a href="{{wagtail_settings.base.SiteSettings.Facebook}}" class="social-icons">
-                            <img src="https://passion4health.org/{% static 'images/socialicons/Facebook.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
+                            <img src="https://passion4health.org{% static 'images/socialicons/facebook_green.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
                         </a>
                     {% endif %}
                     {% if wagtail_settings.base.SiteSettings.Instagram %}
                         <a href="{{wagtail_settings.base.SiteSettings.Instagram}}" class="social-icons">
-                            <img src="https://passion4health.org/{% static 'images/socialicons/instagram.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
+                            <img src="https://passion4health.org{% static 'images/socialicons/Instagram_green.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
                         </a>
                     {% endif %}
                     {% if wagtail_settings.base.SiteSettings.Twitter %}
                         <a href="{{wagtail_settings.base.SiteSettings.Twitter}}" class="social-icons">
-                            <img src="https://passion4health.org/{% static 'images/socialicons/x.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
+                            <img src="https://passion4health.org{% static 'images/socialicons/x_green.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
                         </a>
                     {% endif %}
                     {% if wagtail_settings.base.SiteSettings.Linkedin %}
                         <a href="wagtail_settings.base.SiteSettings.Linkedin" class="social-icons">
-                            <img src="https://passion4health.org/{% static 'images/socialicons/linkedin.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
+                            <img src="https://passion4health.org{% static 'images/socialicons/linkedin_green.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
                         </a>
                     {% endif %}
             </div>
