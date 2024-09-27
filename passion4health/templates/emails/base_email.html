@@ -1,0 +1,124 @@
+
+{% load wagtailcore_tags wagtailimages_tags wagtailsettings_tags %}
+<!DOCTYPE html>
+<html lang="en">
+{% get_settings as wagtail_settings %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        
+        {{ wagtail_settings.base.SiteSettings.org_name }}
+    </title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #faf9f6;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        a.button:hover {
+            background-color: #21ed97;
+        }
+
+        a.button {
+            background-color: #09cc7f;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 0;
+            font-weight: bold;
+        }
+
+        .social-icons svg {
+            width: 24px;
+            height: 24px;
+            margin: 0 10px;
+            fill: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div
+        style="margin: auto; max-width: 600px; background-color: #fff; width: 90%; margin-top: 70px; margin-bottom: 70px; overflow: hidden;">
+        <div style="width: 100%; overflow: hidden; aspect-ratio: 4;">
+            {% if wagtail_settings.base.SiteSettings.email_bunner_image %}
+                {% image wagtail_settings.base.SiteSettings.email_bunner_image original as bunner %}
+                <img src="https://passion4health.org{{bunner.url}}" alt="Passion4Health Banner" style="width: 100%; height: auto;">
+            {% endif %}
+            
+        </div>
+        <div style="padding: 20px; font-size: 16px; color: #333;">
+            {% block email_content %}
+                {{ email_content }}
+            {% endblock %}
+            
+            <div style="text-align: center; margin-top: 20px;">
+                {% block email_action_button %}
+                    {{ email_action_button }}
+                {% endblock %}
+            </div>
+        </div>
+        <div style="padding: 20px; font-size: 14px; color: #333;">
+
+            <p style="text-align: center;">
+                {% if wagtail_settings.base.SiteSettings.email_common_message %}
+                    {{wagtail_settings.base.SiteSettings.email_common_message}}
+                {% endif %}
+            </p>
+        </div>
+        <div style="width: 100%; background-color: #010a1f; min-height: 100px;">
+            <table role="presentation" cellspacing="0" cellpadding="0" style="padding-top: 20px; width: 100%;">
+                <tr style="width: 50%;" align="center">
+                    {% if wagtail_settings.base.SiteSettings.donate_page %}
+                        <td>
+                            <a style="text-decoration: none; color: #fff;" href="https://passion4health.org{% pageurl wagtail_settings.base.SiteSettings.donate_page %}">Donate</a></td>
+                        <td>
+                    {% endif %}
+                    <a style="text-decoration: none; color: #fff;"
+                            href="https://passion4health.org/blog">Blog</a></td>
+                    <td>
+                        <a style="text-decoration: none; color: #fff;" href="https://passion4health.org/join">Join
+                            Us
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            
+            <div style="text-align: center; padding: 20px;">
+                    {% if wagtail_settings.base.SiteSettings.Facebook %}
+                        <a href="{{wagtail_settings.base.SiteSettings.Facebook}}" class="social-icons">
+                            <img src="https://passion4health.org/{% static 'images/socialicons/Facebook.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
+                        </a>
+                    {% endif %}
+                    {% if wagtail_settings.base.SiteSettings.Instagram %}
+                        <a href="{{wagtail_settings.base.SiteSettings.Instagram}}" class="social-icons">
+                            <img src="https://passion4health.org/{% static 'images/socialicons/instagram.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
+                        </a>
+                    {% endif %}
+                    {% if wagtail_settings.base.SiteSettings.Twitter %}
+                        <a href="{{wagtail_settings.base.SiteSettings.Twitter}}" class="social-icons">
+                            <img src="https://passion4health.org/{% static 'images/socialicons/x.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
+                        </a>
+                    {% endif %}
+                    {% if wagtail_settings.base.SiteSettings.Linkedin %}
+                        <a href="wagtail_settings.base.SiteSettings.Linkedin" class="social-icons">
+                            <img src="https://passion4health.org/{% static 'images/socialicons/linkedin.png' %}" alt="Social Media Icon" style="width: 24px; height: 24px;">
+                        </a>
+                    {% endif %}
+            </div>
+            <p style="text-align: center; color: #fff; padding-bottom: 20px;">
+                &copy; 2024 {{ wagtail_settings.base.SiteSettings.org_name }}. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

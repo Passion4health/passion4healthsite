@@ -48,6 +48,8 @@ class SiteSettings(BaseGenericSetting):
     )
     
     
+    
+    
     # social media
     Facebook = models.URLField(verbose_name="Facebook Page", blank=True)
     Instagram = models.URLField(verbose_name="Instragram", blank=True)
@@ -78,6 +80,17 @@ class SiteSettings(BaseGenericSetting):
         verbose_name="Choose the donate page"
     )
     
+    # system email settings
+    email_common_message = models.CharField(
+        max_length=100, 
+        verbose_name="Donate Button Text", 
+        help_text="Text for the donate button", 
+        blank=True, 
+        null=True
+    )
+    email_bunner_image = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.CASCADE, related_name="+", verbose_name="Inverted color Rectangle Logo",null=True, blank=True
+    )
     
     panels = [
         MultiFieldPanel(
@@ -121,6 +134,13 @@ class SiteSettings(BaseGenericSetting):
                 FieldPanel("donate_page"),  # Allows selecting the donate page
             ],
             "Donate Page Settings",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("email_common_message"),
+                FieldPanel("email_bunner_image"),
+            ],
+            "System email settings",
         )
     ]
     

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "snippets",
     "widget_tweaks",
     "rest_framework",
+    "djmail",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -190,7 +191,7 @@ WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'tx
 
 WAGTAILIMAGES_EXTENSIONS = ['avif', 'gif', 'jpg', 'jpeg', 'png', 'webp', 'svg', 'ico']
 
-
+# djmail
 
 # Email Backend Configuration for Zoho
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -200,6 +201,7 @@ EMAIL_USE_TLS = True  # For TLS (should be True when using port 587)
 EMAIL_HOST_USER = 'info@passion4health.org'  # Your Zoho email address
 EMAIL_HOST_PASSWORD = 'xhDXmhFGF4qp'  # Make sure this is correct (or use an app-specific password if 2FA is enabled)
 DEFAULT_FROM_EMAIL = 'info@passion4health.org'
+SERVER_EMAIL = "info@passion4health.org"
 
 CSRF_TRUSTED_ORIGINS = [
     'https://passion4health.org', 
