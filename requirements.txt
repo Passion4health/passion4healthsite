@@ -5,7 +5,7 @@ certifi==2024.8.30
 charset-normalizer==3.3.2
 defusedxml==0.7.1
 dj-database-url==2.2.0
-Django==4.2.16
+Django==5.1.1
 django-filter==24.3
 django-modelcluster==6.3
 django-permissionedforms==0.1
@@ -13,6 +13,7 @@ django-taggit==5.0.1
 django-treebeard==4.7.1
 django-widget-tweaks==1.5.0
 djangorestframework==3.15.2
+djmail==2.0.0
 draftjs-exporter==5.0.0
 et-xmlfile==1.1.0
 filetype==1.2.0
