@@ -22,7 +22,7 @@ def subscribe(request):
         Subscriber.objects.create(email=email)
         
         # Prepare email content
-        subject = 'Subscription Confirmation '
+        subject = 'Thank you for email subscription'
         from_email = 'info@passion4health.org'
         recipient_list = [email]
 
