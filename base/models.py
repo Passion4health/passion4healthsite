@@ -85,13 +85,13 @@ class SiteSettings(BaseGenericSetting):
     # system email settings
     email_common_message = models.CharField(
         max_length=100, 
-        verbose_name="Donate Button Text", 
-        help_text="Text for the donate button", 
+        verbose_name="Common Email message", 
+        help_text="This message will be shown at the buttom of every system sentt emails", 
         blank=True, 
         null=True
     )
     email_bunner_image = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.CASCADE, related_name="+", verbose_name="Inverted color Rectangle Logo",null=True, blank=True
+        'wagtailimages.Image', on_delete=models.CASCADE, related_name="+", verbose_name="Email bunner Image",null=True, blank=True
     )
     
     panels = [
