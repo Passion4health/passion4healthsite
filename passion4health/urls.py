@@ -20,6 +20,8 @@ urlpatterns = [
     path('api/subscribe/', subscriber.subscribe, name='api_subscribe'),
     path('api/contact/', contact_form_submission, name='contact_form_submission'),
     path('send-test-email/', send_test_email, name='send_test_email'),
+    re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]
 
 
