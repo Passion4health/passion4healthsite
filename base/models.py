@@ -61,7 +61,7 @@ class SiteSettings(BaseGenericSetting):
     # contact name
     
     email = models.EmailField(verbose_name="General Email Address", blank=True)
-    telephone = models.CharField(verbose_name="General Telephone line", blank=True, max_length=13)
+    telephone = models.CharField(verbose_name="General Telephone line", blank=True, max_length=20)
     location_address = models.CharField(verbose_name="Loaction of the organization", blank=True, max_length=250)
     street_address = models.CharField(verbose_name="Street address of the organization", blank=True, max_length=250)
     
