@@ -169,7 +169,7 @@
           "name": "{% if site_settings.org_name %}{{ site_settings.org_name|escapejs }}{% else %}Passion4health Foundation{% endif %}",
           "url": "https://www.passion4health.org",
           {% if site_settings.icon_logo %}
-          "logo": "{% image site_settings.icon_logo original as logo %}https://www.passion4health.org{{ logo.urls }}",
+          "logo": "{% image site_settings.icon_logo original as logo %}{{ logo.urls }}",
           {% endif %}
           {% if site_settings.email %}
           "contactPoint": {
