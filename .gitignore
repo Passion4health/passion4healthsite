@@ -4,7 +4,7 @@
 # Django project
 /media/
 *.sqlite3
-
+/static
 # Python-related
 __pycache__/
 *.pyc
