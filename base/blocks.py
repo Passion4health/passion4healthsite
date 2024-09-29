@@ -158,7 +158,7 @@ class coreTeamOneMember(StructBlock):
         required=False,
     )
     role = CharBlock(
-        max_length=20,
+        max_length=30,
         required=True
     )
     
