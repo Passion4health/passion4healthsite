@@ -85,8 +85,7 @@ class SiteSettings(BaseGenericSetting):
     # system email settings
     email_common_message = models.CharField(
         max_length=100, 
-        verbose_name="Common Email message", 
-        help_text="This message will be shown at the buttom of every system sentt emails", 
+        help_text="This message will be shown at the buttom of every system sent emails", 
         blank=True, 
         null=True
     )

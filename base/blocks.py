@@ -151,7 +151,7 @@ class coreTeamOneMember(StructBlock):
         required=True
     )
     phone = CharBlock(
-        min_length=10,
+        min_length=18,
         required=True
     )
     linkedIn = URLBlock(
