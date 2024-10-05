@@ -14,6 +14,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 import dj_database_url
 
+RECAPTCHA_SECRET_KEY = "6LexcFgqAAAAAK3GsS77qk9Vi9VDwfZufeKCTqRU"
+WAGTAIL_ENABLE_UPDATE_CHECK = False
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
