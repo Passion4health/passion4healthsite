@@ -210,13 +210,18 @@ class DonationsFundScholarsStruct(StructBlock):
         help_text="Number of received donations",
         
     )
+    scholarsthisyear = IntegerBlock(
+        required=True,
+        help_text="Number of scholars to be supported by the project in this year",
+        
+    )
     funds = IntegerBlock(
         required=True,
         help_text="The amount raised, in US dollars!"
     )
     scholars = IntegerBlock(
         required=True,
-        help_text="Number of scholars in the project"
+        help_text="Number of scholars to be supported by the project by 2028"
     )
     background_image = ImageChooserBlock(
         required=True,
