@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.mail import send_mail
 # Create your models here.
-
+from wagtail.fields import RichTextField
 from wagtail.admin.panels import(
     FieldPanel,
     MultiFieldPanel,
@@ -280,7 +280,7 @@ class VolunteerJoinPage(Page):
         null=True,
         help_text="Secondary title for the volunteer page"
     )
-    volunteership_message = models.TextField(
+    volunteership_message = RichTextField(
         blank=False,
         null=True,
         help_text="A short message to attract volunteers"
