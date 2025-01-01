@@ -8,81 +8,57 @@
     {% endif %} {% endcomment %}
     <style>
         .volunteer-section {
-            padding: 50px 15px; /* Reduce padding for smaller screens */
+            padding: 50px 0;
         }
-        
-        .volunteer-section .message-column,
+        .volunteer-section .message-column {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
         .volunteer-section .image-column {
-            padding: 15px; /* Add internal padding for smaller screens */
+            text-align: center;
         }
-        
+        .volunteer-section .image-column img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
         .volunteer-section h2 {
-            font-size: 4rem; /* Default font size for larger screens */
+            font-size: 4rem; /* Large font size for the heading */
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 20px;
         }
-        
-        .volunteer-section p {
-            font-size: 1.5rem; /* Default font size for larger screens */
+        .volunteer-section p.lead {
+            font-size: 1.5rem; /* Large font size for the message */
             line-height: 1.5;
             margin-bottom: 30px;
         }
-        
         .volunteer-section .action-buttons a {
             margin: 10px;
-            padding: 10px 20px; /* Ensure buttons are responsive */
         }
-        
         /* Responsive styles */
-        @media (max-width: 992px) {
-            .volunteer-section {
-                padding: 40px 15px; /* Adjust padding */
-            }
-        
-            .volunteer-section h2 {
-                font-size: 3rem;
-            }
-        
-            .volunteer-section p {
-                font-size: 1.25rem;
-            }
-        }
-        
         @media (max-width: 768px) {
-            .volunteer-section {
-                padding: 30px 10px; /* Further adjust padding for smaller screens */
-            }
-        
             .volunteer-section h2 {
                 font-size: 2.5rem;
             }
-        
-            .volunteer-section p {
-                font-size: 1.2rem;
+            .volunteer-section p.lead {
+                font-size: 1.25rem;
             }
         }
-        
         @media (max-width: 576px) {
-            .volunteer-section {
-                padding: 20px 10px; /* Minimal padding for the smallest screens */
-            }
-        
             .volunteer-section h2 {
                 font-size: 2rem;
-                text-align: center; /* Center-align text for small screens */
             }
-        
-            .volunteer-section p {
-                font-size: 1rem;
-                text-align: justify; /* Optional: Improve readability */
-            }
-        
-            .volunteer-section .action-buttons {
-                text-align: center; /* Center buttons */
+            .volunteer-section p.lead {
+                font-size: 1.1rem;
             }
         }
-        
+        @media (max-width: 400px) {
+            .volunteer-section  {
+                margin: 2rem;
+            }
+        }
     </style>
     <section class="contact-section">
         <div class="container volunteer-section">
