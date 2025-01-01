@@ -8,52 +8,81 @@
     {% endif %} {% endcomment %}
     <style>
         .volunteer-section {
-            padding: 50px 0;
+            padding: 50px 15px; /* Reduce padding for smaller screens */
         }
-        .volunteer-section .message-column {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+        
+        .volunteer-section .message-column,
         .volunteer-section .image-column {
-            text-align: center;
+            padding: 15px; /* Add internal padding for smaller screens */
         }
-        .volunteer-section .image-column img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
+        
         .volunteer-section h2 {
-            font-size: 4rem; /* Large font size for the heading */
+            font-size: 4rem; /* Default font size for larger screens */
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 20px;
         }
-        .volunteer-section p.lead {
-            font-size: 1.5rem; /* Large font size for the message */
+        
+        .volunteer-section p {
+            font-size: 1.5rem; /* Default font size for larger screens */
             line-height: 1.5;
             margin-bottom: 30px;
         }
+        
         .volunteer-section .action-buttons a {
             margin: 10px;
+            padding: 10px 20px; /* Ensure buttons are responsive */
         }
+        
         /* Responsive styles */
-        @media (max-width: 768px) {
-            .volunteer-section h2 {
-                font-size: 2.5rem;
+        @media (max-width: 992px) {
+            .volunteer-section {
+                padding: 40px 15px; /* Adjust padding */
             }
-            .volunteer-section p.lead {
+        
+            .volunteer-section h2 {
+                font-size: 3rem;
+            }
+        
+            .volunteer-section p {
                 font-size: 1.25rem;
             }
         }
-        @media (max-width: 576px) {
-            .volunteer-section h2 {
-                font-size: 2rem;
+        
+        @media (max-width: 768px) {
+            .volunteer-section {
+                padding: 30px 10px; /* Further adjust padding for smaller screens */
             }
-            .volunteer-section p.lead {
-                font-size: 1.1rem;
+        
+            .volunteer-section h2 {
+                font-size: 2.5rem;
+            }
+        
+            .volunteer-section p {
+                font-size: 1.2rem;
             }
         }
+        
+        @media (max-width: 576px) {
+            .volunteer-section {
+                padding: 20px 10px; /* Minimal padding for the smallest screens */
+            }
+        
+            .volunteer-section h2 {
+                font-size: 2rem;
+                text-align: center; /* Center-align text for small screens */
+            }
+        
+            .volunteer-section p {
+                font-size: 1rem;
+                text-align: justify; /* Optional: Improve readability */
+            }
+        
+            .volunteer-section .action-buttons {
+                text-align: center; /* Center buttons */
+            }
+        }
+        
     </style>
     <section class="contact-section">
         <div class="container volunteer-section">
