@@ -24,8 +24,8 @@ class BlogIndex(Page):
     def get_context(self, request):
         context = super().get_context(request)
 
-        # Get all blog articles
-        blogarticles = BlogAndNewsArticle.objects.live()
+        # Get all live blog articles ordered by most recent first
+        blogarticles = BlogAndNewsArticle.objects.live().order_by('-date')
 
         # Check for a tag filter in the GET request
         tag_filter = request.GET.get('tag', None)
