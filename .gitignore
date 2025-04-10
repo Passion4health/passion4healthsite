@@ -12,7 +12,7 @@ __pycache__/
 *.swp
 /env/
 /tmp/
-
+/server-backups/
 # Virtual environment
 env/
 venv/
