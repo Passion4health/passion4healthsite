@@ -14,6 +14,48 @@
         {% endfor %}
 
     {% endif %}
+    {% comment %} Scholars program section {% endcomment %}
+    {% if scholars_program %}
+        {% for program in scholars_program  %}
+            
+            <section class="scholars-section-home " style="background-image: url({% image program.burner_image original as burner_image %}{{ burner_image.url }});">
+                <div class="scholars-section-content-hl container">
+                    <div class="scholars-section-content">
+                        <div class="section-tittle text-center mb-40">
+                            <h2>
+                                {{program.title}}
+                            </h2>
+                        </div>
+                        <div class="scholars-section-content-total-scholar-counter">
+                            <div class="scholars-section-content-total-scholar-counter-to">
+                                {{program.total_scholar_in_all_cohorts}}
+                            </div>
+                            <div class="scholars-section-content-total-scholar-counter-text">
+                                Scholars Trained
+                            </div>
+                        </div>
+                        <div class="scs-program-desc">
+                            {{program.description}}
+                        </div>
+                        <div class="learn_more__btn">
+                           <a href="{% url 'scholars_program_overview' %}" class="btn hero-btn mb-10" data-animation="fadeInLeft" data-delay=".8s" tabindex="0" style="animation-delay: 0.8s;">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        {% endfor %}
+        
+    {% endif %}
+
+    {% comment %} Our mission and vision section {% endcomment %}
+    {% if page.our_mission_and_vision %}
+        {% for block in page.our_mission_and_vision.mission %}
+            {% include_block block %}
+        {% endfor %}   
+    {% endif %}
 
     {% comment %} Why project block {% endcomment %}
     {% if page.whyproject %}

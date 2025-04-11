@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "search",
     'base',
     "blog",
+    "scholars",
     "subscribeapi",
     "snippets",
     "widget_tweaks",
