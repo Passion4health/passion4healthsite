@@ -32,10 +32,10 @@ def subscribe(request):
             'email_action_button': mark_safe(''),  # Mark as safe
         })
 
-        # Send the email
-        msg = EmailMessage(subject, email_html_content, from_email, recipient_list)
-        msg.content_subtype = 'html'  # Set the email content type to HTML
-        msg.send()
+        # # Send the email
+        # msg = EmailMessage(subject, email_html_content, from_email, recipient_list)
+        # msg.content_subtype = 'html'  # Set the email content type to HTML
+        # msg.send()
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
