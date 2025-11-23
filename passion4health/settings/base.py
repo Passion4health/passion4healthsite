@@ -12,13 +12,26 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
 
 RECAPTCHA_SECRET_KEY = "6LexcFgqAAAAAK3GsS77qk9Vi9VDwfZufeKCTqRU"
 WAGTAIL_ENABLE_UPDATE_CHECK = False
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
+
+# Load environment variables from .env file
+# Look for .env file in the project root (BASE_DIR)
+env_path = Path(BASE_DIR) / '.env'
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
+else:
+    # Also try loading from project root if BASE_DIR is different
+    project_env_path = Path(__file__).resolve().parent.parent.parent / '.env'
+    if project_env_path.exists():
+        load_dotenv(dotenv_path=project_env_path)
 
 
 # Quick-start development settings - unsuitable for production
@@ -155,20 +168,67 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
-# Default storage settings, with the staticfiles storage updated.
-# See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    # ManifestStaticFilesStorage is recommended in production, to prevent
-    # outdated JavaScript / CSS assets being served from cache
-    # (e.g. after a Wagtail upgrade).
-    # See https://docs.djangoproject.com/en/5.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
-    },
-}
+# S3 Storage Configuration
+# Set USE_S3_STORAGE=True in your .env file to enable S3 storage
+USE_S3_STORAGE = os.getenv('USE_S3_STORAGE', 'False').lower() == 'true'
+
+if USE_S3_STORAGE:
+    # AWS S3 Settings
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
+    AWS_S3_CUSTOM_DOMAIN = os.getenv('AWS_S3_CUSTOM_DOMAIN', '')
+    AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL', None)
+    
+    # S3 Storage Options
+    AWS_DEFAULT_ACL = os.getenv('AWS_DEFAULT_ACL', 'public-read')
+    AWS_S3_FILE_OVERWRITE = os.getenv('AWS_S3_FILE_OVERWRITE', 'False').lower() == 'true'
+    AWS_QUERYSTRING_AUTH = os.getenv('AWS_QUERYSTRING_AUTH', 'False').lower() == 'true'
+    AWS_LOCATION = os.getenv('AWS_LOCATION', '')
+    
+    # S3 Object Parameters
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    
+    # Static and Media URLs when using S3
+    if AWS_S3_CUSTOM_DOMAIN:
+        STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}static/'
+        MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}media/'
+    else:
+        STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/{AWS_LOCATION}static/'
+        MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/{AWS_LOCATION}media/'
+    
+    # Storage backends for S3
+    # Use custom storage classes for better organization
+    STORAGES = {
+        "default": {
+            "BACKEND": "passion4health.storage.MediaStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "passion4health.storage.StaticStorage",
+        },
+    }
+    
+    # For MinIO or S3-compatible storage
+    if AWS_S3_ENDPOINT_URL:
+        AWS_S3_ADDRESSING_STYLE = os.getenv('AWS_S3_ADDRESSING_STYLE', 'path')
+else:
+    # Default storage settings, with the staticfiles storage updated.
+    # See https://docs.djangoproject.com/en/5.1/ref/settings/#std-setting-STORAGES
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        # ManifestStaticFilesStorage is recommended in production, to prevent
+        # outdated JavaScript / CSS assets being served from cache
+        # (e.g. after a Wagtail upgrade).
+        # See https://docs.djangoproject.com/en/5.1/ref/contrib/staticfiles/#manifeststaticfilesstorage
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+        },
+    }
 
 
 # Wagtail settings

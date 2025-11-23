@@ -74,5 +74,5 @@ Vagrantfile.local
 *.log
 *.pid
 *.pid.lock
-*.env
+.env
 .env.*
