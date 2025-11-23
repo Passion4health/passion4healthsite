@@ -1,11 +1,10 @@
 # Ignore collected static files, but not app static files
 /staticfiles/  # Ignore the output of collectstatic
 /static/  # Ignore global static folder (collected)
-
 # Django project
 /media/
 *.sqlite3
-
+/static
 # Python-related
 __pycache__/
 *.pyc
@@ -13,7 +12,7 @@ __pycache__/
 *.swp
 /env/
 /tmp/
-
+/server-backups/
 # Virtual environment
 env/
 venv/
@@ -75,5 +74,5 @@ Vagrantfile.local
 *.log
 *.pid
 *.pid.lock
-*.env
+.env
 .env.*
