@@ -54,6 +54,12 @@
                 font-size: 1.1rem;
             }
         }
+        @media (max-width: 650px) {
+            .volunteer-section {
+                margin: 4rem;
+                width: auto !important;
+            }
+        }
     </style>
     <section class="contact-section">
         <div class="container volunteer-section">
@@ -62,7 +68,7 @@
                 <div class="col-md-6 message-column">
                     <h2 class="font-weight-bold">{{page.volunteer_section_title}}</h2>
                     <p class="">
-                        {{page.volunteership_message}}
+                        {{ page.volunteership_message|richtext}}
                     </p>
                     
                 </div>

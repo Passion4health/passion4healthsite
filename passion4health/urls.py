@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.urls import include, path
 from django.contrib import admin
+from django.urls import re_path
+from django.views.static import serve
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
@@ -18,6 +20,9 @@ urlpatterns = [
     path('api/subscribe/', subscriber.subscribe, name='api_subscribe'),
     path('api/contact/', contact_form_submission, name='contact_form_submission'),
     path('send-test-email/', send_test_email, name='send_test_email'),
+    path('scholars/', include('scholars.urls')),
+    re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]
 
 

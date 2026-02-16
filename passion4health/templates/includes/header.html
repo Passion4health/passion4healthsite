@@ -22,7 +22,7 @@
                                         {% endif %}
                                     </ul>
                                     <div class="header-social">
-                                        {% with facebook=settings.base.SiteSettings.Facebook twitter=settings.base.SiteSettings.Twitter linkedin=settings.base.SiteSettings.Linkedin instagram=settings.base.SiteSettings.Instagram %} 
+                                        {% with facebook=settings.base.SiteSettings.Facebook twitter=settings.base.SiteSettings.Twitter linkedin=settings.base.SiteSettings.LinkedIn instagram=settings.base.SiteSettings.Instagram %} 
                                             <ul>
                                                 {% if twitter %}
                                                     <li>
@@ -117,6 +117,11 @@
                                                     </li>
                                                     
                                                 {% endfor %}
+                                                <li>
+                                                    <a href="{% url 'scholars_program_overview' %}">
+                                                        Scholars
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </nav>
                                     </div>

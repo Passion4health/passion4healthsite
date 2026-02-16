@@ -34,14 +34,13 @@
                                 ">
                                 <div class="cat-icon">
                                     <span class="service-icons-hl">
-                                        {% image service.icon_image width-400 as tmp_photo %}
+                                        {% image service.icon_image original as tmp_photo %}
                                         {% if tmp_photo.url|slice:"-3:" == "svg"  %}
                                             {{tmp_photo|inline_svg  }}
                                         {% else %}
-                                            <img src="{{tmp_photo.url }}" alt="">
+                                            <img src="{{tmp_photo.url }}" alt="" >
                                         {% endif %}
                                         
-
                                     </span>
                                 </div>
                                 <div class="cat-cap">

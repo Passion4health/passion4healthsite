@@ -1,5 +1,8 @@
 from django.db import models
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
+from wagtail.fields import RichTextField
 # Create your models here.
 from wagtail.fields import RichTextField
 from wagtail.admin.panels import(
@@ -48,6 +51,8 @@ class SiteSettings(BaseGenericSetting):
     )
     
     
+    
+    
     # social media
     Facebook = models.URLField(verbose_name="Facebook Page", blank=True)
     Instagram = models.URLField(verbose_name="Instragram", blank=True)
@@ -57,7 +62,7 @@ class SiteSettings(BaseGenericSetting):
     # contact name
     
     email = models.EmailField(verbose_name="General Email Address", blank=True)
-    telephone = models.CharField(verbose_name="General Telephone line", blank=True, max_length=13)
+    telephone = models.CharField(verbose_name="General Telephone line", blank=True, max_length=20)
     location_address = models.CharField(verbose_name="Loaction of the organization", blank=True, max_length=250)
     street_address = models.CharField(verbose_name="Street address of the organization", blank=True, max_length=250)
     
@@ -78,6 +83,16 @@ class SiteSettings(BaseGenericSetting):
         verbose_name="Choose the donate page"
     )
     
+    # system email settings
+    email_common_message = models.CharField(
+        max_length=100, 
+        help_text="This message will be shown at the buttom of every system sent emails", 
+        blank=True, 
+        null=True
+    )
+    email_bunner_image = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.CASCADE, related_name="+", verbose_name="Email bunner Image",null=True, blank=True
+    )
     
     panels = [
         MultiFieldPanel(
@@ -121,6 +136,13 @@ class SiteSettings(BaseGenericSetting):
                 FieldPanel("donate_page"),  # Allows selecting the donate page
             ],
             "Donate Page Settings",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("email_common_message"),
+                FieldPanel("email_bunner_image"),
+            ],
+            "System email settings",
         )
     ]
     
@@ -201,23 +223,58 @@ class ContactFormSubmission(models.Model):
         return f"Message from {self.name}"
     
     def save(self, *args, **kwargs):
-        # If there is a response message, mark the submission as responded
+        # If the object is new (first-time save), send a submission notification email
+        if not self.pk:
+            self.send_submission_email()
+        
+        # If there's a response message and it's the first time being saved, send response email
         if self.response_message and not self.responded:
             self.responded = True
+            self.send_response()
+
         super().save(*args, **kwargs)
 
+    def send_submission_email(self):
+        """Send an email to the user confirming receipt of the message."""
+        email_subject = "Thank you for contacting us!"
+        from_email = 'info@passion4health.org'
+        recipient_list = [self.email]
+
+        # Render the email template
+        email_html_content = render_to_string('emails/base_email.html', {
+            'email_content': mark_safe(f"Dear {self.name}, thank you for reaching out! We have received your message: <br><hr>\"{self.message}\"."),
+        })
+
+        # Send the email
+        send_mail(
+            subject=email_subject,
+            message='',  # Fallback for plain text email
+            html_message=email_html_content,
+            from_email=from_email,
+            recipient_list=recipient_list,
+            fail_silently=False,
+        )
+
     def send_response(self):
-        """Send an email response to the client."""
-        if self.response_message:
-            send_mail(
-                subject=f"Re: {self.subject}",
-                message=self.response_message,
-                from_email='info@passion4health.org',  # Replace with your sender email
-                recipient_list=[self.email],
-                fail_silently=False,
-            )
-            self.responded = True
-            self.save()
+        """Send an email response to the client with the admin's response message."""
+        email_subject = f"Re: {self.subject}"
+        from_email = 'info@passion4health.org'
+        recipient_list = [self.email]
+
+        # Render the response email template
+        email_html_content = render_to_string('emails/base_email.html', {
+            'email_content': mark_safe(f"Dear {self.name}, here is our response to your message: <br><hr>\"{self.response_message}\"."),
+        })
+
+        # Send the response email
+        send_mail(
+            subject=email_subject,
+            message='',  # Fallback for plain text email
+            html_message=email_html_content,
+            from_email=from_email,
+            recipient_list=recipient_list,
+            fail_silently=False,
+        )
     
 class ContactUs(Page):
     hero_block = StreamField(
@@ -243,12 +300,13 @@ class DonatePage(Page):
         max_length=255,
         null=True
     )
-    patternship_image = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.PROTECT, related_name="+", verbose_name="Image of patternship", null=True, blank=True
-    )
-    donate_link = models.URLField(
-        blank=False,
+    
+    # Instead of external link, now we use a field for embedding HTML donation forms
+    donation_embed_code = models.TextField(
+        blank=True,
         null=True,
+        verbose_name="Donation Embed Code",
+        help_text="Paste your donation form HTML from donorbox.org or similar service here."
     )
     
     # Reference to the ContactUs page
@@ -266,11 +324,10 @@ class DonatePage(Page):
             [
                 FieldPanel("donate_page_title"),
                 FieldPanel("donate_message"),
-                FieldPanel("patternship_image"),
-                FieldPanel("donate_link"),
-                FieldPanel("contact_us_page"),  # Add this panel to your content editor
+                FieldPanel("donation_embed_code"),  # New panel for HTML embed
+                FieldPanel("contact_us_page"),
             ],
-            heading="This page is a transmission to the actual fund collecting page. So use titles and messages that acknowledge the donor!"
+            heading="It is better if this page is edited by a developer!"
         ),
     ]
 class VolunteerJoinPage(Page):

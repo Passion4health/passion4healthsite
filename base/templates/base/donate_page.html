@@ -65,16 +65,15 @@
                         {{page.donate_message}}
                     </p>
                     <div class="action-buttons">
-                        <a href="{{page.donate_link}}" class="btn btn-primary btn-lg">Continue to Donate</a>
                         <a href="{{page.contact_us_page.url}}" class="btn btn-secondary btn-lg">Contact Us</a>
                     </div>
                 </div>
                 <!-- Image Column -->
                 <div class="col-md-6 image-column">
-                    {% if page.patternship_image %}
-                        {% image page.patternship_image original as image %}
-                        <img src="{{image.url}}" alt="{{image.title}}">
-                    {% endif %}
+                    
+                    <div class="donation-embed">
+                        {{ page.donation_embed_code|safe }}
+                    </div>
                     
                     
                 </div>

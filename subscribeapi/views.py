@@ -3,10 +3,10 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Subscriber
 from .serializers import SubscriberSerializer
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe  # Import mark_safe
 from django.shortcuts import render
-from django.utils import timezone
-import calendar
-
 
 @api_view(['POST'])
 def subscribe(request):
@@ -21,8 +21,22 @@ def subscribe(request):
         # Create the new subscriber if email doesn't exist
         Subscriber.objects.create(email=email)
         
-        # Optionally send a confirmation email here
+        # Prepare email content
+        subject = 'Thank you for email subscription!'
+        from_email = 'info@passion4health.org'
+        recipient_list = [email]
 
+        # Render the email template with dynamic content
+        email_html_content = render_to_string('emails/base_email.html', {
+            'email_content': mark_safe('Thank you for subscribing to our newsletter!'),  # Mark as safe
+            'email_action_button': mark_safe(''),  # Mark as safe
+        })
+
+        # # Send the email
+        # msg = EmailMessage(subject, email_html_content, from_email, recipient_list)
+        # msg.content_subtype = 'html'  # Set the email content type to HTML
+        # msg.send()
+        
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

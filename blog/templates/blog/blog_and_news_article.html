@@ -43,6 +43,8 @@
                     </div>
                 </div>
                 <div class="navigation-top">
+                    {% load url_filters %}
+
                     <div class="d-sm-flex justify-content-between text-center">
                         <p class="like-info">SHARE THIS ARTICLE</p>
                         <div class="col-sm-4 text-center my-2 my-sm-0">
@@ -51,28 +53,28 @@
                         <ul class="social-icons">
                             <!-- Facebook Share -->
                             <li>
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.full_url }}" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
                             </li>
                             
                             <!-- WhatsApp Share -->
                             <li>
-                                <a href="https://api.whatsapp.com/send?text={{ page.full_url }}" target="_blank" rel="noopener noreferrer">
+                                <a href="https://api.whatsapp.com/send?text={{request.build_absolute_uri}}" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-whatsapp"></i>
                                 </a>
                             </li>
                             
                             <!-- Twitter Share -->
                             <li>
-                                <a href="https://twitter.com/intent/tweet?url={{ page.full_url }}&text=Check this out!" target="_blank" rel="noopener noreferrer">
+                                <a href="https://twitter.com/intent/tweet?url={{request.build_absolute_uri}}&text=Check this out!" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-twitter"></i>
                                 </a>
                             </li>
                             
                             <!-- Email Share -->
                             <li>
-                                <a href="mailto:?subject=Check out this article&body=Read this article here: {{ page.full_url }}" target="_blank" rel="noopener noreferrer">
+                                <a href="mailto:?subject=Check out this article&body=Read this article here: {{request.build_absolute_uri}}" target="_blank" rel="noopener noreferrer">
                                     <i class="fab fa-envelope"></i>
                                 </a>
                             </li>
@@ -147,8 +149,11 @@
                         {% if authors %}
                             <div class="media align-items-center">
                                 {% for author in authors %}
-                                    {% image author.author_image original as author_image%}
-                                    <img src="{{author_image.url}}" alt="">
+                                    {% if author.author_image %}
+                                        {% image author.author_image fill-90x90 as author_image%}
+                                        <img src="{{author_image.url}}" alt="">
+                                    {% endif %}
+                                    
                                     <div class="media-body">
                                         <a href="#">
                                             <h4>{{author.name}}</h4>

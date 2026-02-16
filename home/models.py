@@ -8,6 +8,7 @@ from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel
 from snippets.models import OurService
 from blog.models import BlogAndNewsArticle
+from scholars.models import ScholarsProgram
 
 class HomePage(Page):
     hero_block = StreamField(
@@ -71,5 +72,9 @@ class HomePage(Page):
         
         # Add the articles to the context
         context['blog_articles'] = articles
+        
+        # Let us get the context of SCholars Program
+        scholars_program = ScholarsProgram.objects.all()
+        context['scholars_program'] = scholars_program
         
         return context

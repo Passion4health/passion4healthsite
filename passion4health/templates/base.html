@@ -6,27 +6,69 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
+        
+
+
+
         <title> 
             {% block title %}
-            {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+                {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
             {% endblock %}
             {% block title_suffix %}
-            {% wagtail_site as current_site %}
-            {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+                {% wagtail_site as current_site %}
+                {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
             {% endblock %}
         </title>
-
-        {% comment %} Description for the page {% endcomment %}
+        
+        <!-- Meta Tags Grouped by Type -->
+        
+        <!-- Titles -->
+        {% comment %} Title for OpenGraph and Twitter {% endcomment %}
+        <meta property="og:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+        <meta name="twitter:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}" />
+        
+        <!-- Descriptions -->
+        {% comment %} Description for SEO, OpenGraph, and Twitter {% endcomment %}
         {% if page.search_description %}
-        <meta name="description" content="{{ page.search_description }}" />
+            <meta name="description" content="{{ page.search_description }}" />
+            <meta property="og:description" content="{{ page.search_description }}" />
+            <meta name="twitter:description" content="{{ page.search_description }}" />
         {% endif %}
-
+        
+        <!-- Images -->
+        {% comment %} Image tags for OpenGraph and Twitter {% endcomment %}
+        {% if page.head_image %}
+            {% image page.head_image original as head_image %}
+            <meta property="og:image" content="{{ head_image.url }}" />
+            <meta name="twitter:image" content="{{ head_image.url }}" />
+        {% elif page.gallery_images.all %}
+            {% image page.gallery_images.first.image original as fallback_image %}
+            <meta property="og:image" content="{{ fallback_image.url }}" />
+            <meta name="twitter:image" content="{{ fallback_image.url }}" />
+        {% endif %}
+        
+        <!-- URLs -->
+        {% comment %} Canonical URL for OpenGraph {% endcomment %}
+        <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+        
+        <!-- Misc Meta Tags -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="manifest" href="site.webmanifest">
+        
+        <!-- Favicon -->
         {% with icon_logo=settings.base.SiteSettings.icon_logo %}
-            {% image icon_logo original as icon%}
+            {% image icon_logo original as icon %}
             <link rel="shortcut icon" type="image/x-icon" href="{{icon.url}}">
         {% endwith %}
+        
+        <!-- Social Media Tags -->
+        
+        <!-- Twitter -->
+        {% comment %} Twitter meta tags {% endcomment %}
+        <meta name="twitter:card" content="summary_large_image" />
+        
+        
+
+        
         
 
         {# Force all links in the live preview panel to be opened in a new tab #}
@@ -56,17 +98,20 @@
             <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
             <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
             <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/style-10-04-2025.css' %}">
         {% comment %} {% endblock %} {% endcomment %}
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
         
         {% include "includes/header.html" %}
+        {% include "includes/preloader.html" %}
 
        {% comment %} Content of the pages  {% endcomment %}
        {% block content %}{% endblock %}
 
        {% include "includes/footer.html" %}
+       {% include "includes/subscribe_model.html" %}
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/passion4health.js' %}"></script>
@@ -118,5 +163,38 @@
         {% endblock %}
 
     </body>
+    {% with site_settings=settings.base.SiteSettings %}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "{% if site_settings.org_name %}{{ site_settings.org_name|escapejs }}{% else %}Passion4health Foundation{% endif %}",
+          "url": "https://www.passion4health.org",
+          {% if site_settings.icon_logo %}
+          "logo": "{% image site_settings.icon_logo original as logo %}https://www.passion4health.org{{ logo.url }}",
+          {% endif %}
+          {% if site_settings.email %}
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "{% if site_settings.telephone %}{{ site_settings.telephone|escapejs }}{% else %}+250-790-144-775{% endif %}",
+            "contactType": "Customer Service",
+            "email": "{% if site_settings.email %}{{ site_settings.email|escapejs }}{% else %}info@passion4health.org{% endif %}",
+            {% if site_settings.location_address %}"areaServed": "{{ site_settings.location_address|escapejs }}"{% endif %}
+          },
+          {% endif %}
+          {% if site_settings.Facebook or site_settings.Instagram or site_settings.LinkedIn or site_settings.Twitter %}
+          "sameAs": [
+            {% if site_settings.Facebook %}"{{ site_settings.Facebook|escapejs }}"{% endif %}
+            {% if site_settings.Instagram %},{% if not loop.first %}{% endif %}"{{ site_settings.Instagram|escapejs }}"{% endif %}
+            {% if site_settings.LinkedIn %},{% if not loop.first %}{% endif %}"{{ site_settings.LinkedIn|escapejs }}"{% endif %}
+            {% if site_settings.Twitter %},{% if not loop.first %}{% endif %}"{{ site_settings.Twitter|escapejs }}"{% endif %}
+          ]
+          {% endif %}
+        }
+    </script>
+{% endwith %}
+
+
+        
 
 </html>
