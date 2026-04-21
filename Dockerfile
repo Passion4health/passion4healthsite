@@ -1,5 +1,5 @@
-# Debian 12 (bookworm); buster-based images no longer have working default apt mirrors.
-FROM python:3.8-slim-bookworm
+# Debian 12 (bookworm). Python >=3.10 is required so botocore/boto3 can coexist with urllib3 2.x (pinned in requirements).
+FROM python:3.11-slim-bookworm
 
 # Add user that will be used in the container.
 RUN useradd wagtail
