@@ -1,5 +1,5 @@
-# Use an official Python runtime based on Debian 10 "buster" as a parent image.
-FROM python:3.8.1-slim-buster
+# Debian 12 (bookworm); buster-based images no longer have working default apt mirrors.
+FROM python:3.8-slim-bookworm
 
 # Add user that will be used in the container.
 RUN useradd wagtail
@@ -43,4 +43,4 @@ USER wagtail
 RUN python manage.py collectstatic --noinput --clear
 
 # Runtime command that executes when "docker run" is called.
-CMD set -xe; python manage.py migrate --noinput; gunicorn passion4health.wsgi:application
+CMD ["sh", "-c", "set -xe; python manage.py migrate --noinput; exec gunicorn passion4health.wsgi:application"]
